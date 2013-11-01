@@ -1,13 +1,5 @@
 <html>
 <head>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap-theme.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
 
 <!-- DataTables CSS -->
 <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
@@ -18,13 +10,26 @@
 <!-- DataTables -->
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+
 <script type="text/javascript">
 
 $(document).ready(function() {
     $('#example').dataTable( {
-        "sScrollY": "200px",
-        "bPaginate": false
+    	"bSort" : false,
+    	//"aaSorting" : [[]],
+        "bPaginate" : false
     } );
+    fnShowHide(8);
+    fnShowHide(9);
+    fnShowHide(10);
 } );
  
 function fnShowHide( iCol )
@@ -40,19 +45,21 @@ function fnShowHide( iCol )
 
 </head>
 <body>
-<a href="javascript:void(0);" onclick="fnShowHide(0);">id<br></a>
-<a href="javascript:void(0);" onclick="fnShowHide(1);">datetime<br></a>
-<a href="javascript:void(0);" onclick="fnShowHide(2);">ip<br></a>
-<a href="javascript:void(0);" onclick="fnShowHide(3);">hostname<br></a>
-<a href="javascript:void(0);" onclick="fnShowHide(4);">uri<br></a>
-<a href="javascript:void(0);" onclick="fnShowHide(5);">agent<br></a>
-<a href="javascript:void(0);" onclick="fnShowHide(6);">referer<br></a>
-<a href="javascript:void(0);" onclick="fnShowHide(7);">domain<br></a>
-<a href="javascript:void(0);" onclick="fnShowHide(8);">filename<br></a>
-<a href="javascript:void(0);" onclick="fnShowHide(9);">method<br></a>
-<a href="javascript:void(0);" onclick="fnShowHide(9);">data<br></a>
-<center>
+<a href="javascript:void(0);" onclick="fnShowHide(0);">id</a>
+<a href="javascript:void(0);" onclick="fnShowHide(1);">datetime</a>
+<a href="javascript:void(0);" onclick="fnShowHide(2);">ip</a>
+<a href="javascript:void(0);" onclick="fnShowHide(3);">hostname</a>
+<a href="javascript:void(0);" onclick="fnShowHide(4);">uri</a>
+<a href="javascript:void(0);" onclick="fnShowHide(5);">agent</a>
+<a href="javascript:void(0);" onclick="fnShowHide(6);">referer</a>
+<a href="javascript:void(0);" onclick="fnShowHide(7);">domain</a>
+<a href="javascript:void(0);" onclick="fnShowHide(8);">filename</a>
+<a href="javascript:void(0);" onclick="fnShowHide(9);">method</a>
+<a href="javascript:void(0);" onclick="fnShowHide(10);">data</a>
+<br>
+
 <table class="table table-striped table-bordered table-condensed table-hover" id="example">
+<thead>
 <tr>
 <th>id</th>
 <th>datetime</th>
@@ -66,15 +73,36 @@ function fnShowHide( iCol )
 <th>method</th>
 <th>data</th>
 </tr>
+</thead>
+<tbody>
 
 <?php
 include ('logdb.php');
 
-$sql = "SELECT * FROM hits ORDER BY id DESC";
+$limit = 100;
+if(isset($_GET['l'])) $limit = $_GET['l'];
+
+$sql = "SELECT * FROM hits ORDER BY id DESC LIMIT " . $limit;
 $result = mysqli_query($con, $sql);
 
 while($row = mysqli_fetch_array($result))
 {
+	/*
+	$ab = $row['agent'];
+	$pos = strpos($row['agent'], 'MSIE');
+	if ($pos !== false) 
+	{
+		$pos2 = strpos($row['agent'], ';', $pos);
+    	$row['agent'] = trim(substr($row['agent'], $pos, $pos2 - $pos));
+	}
+	$pos = strrpos($row['agent'], ')');
+	if ($pos !== false) 
+	{
+		$pos++;
+		$row['agent'] = trim(substr($row['agent'], $pos));
+    }
+    if($row['agent']=="") $row['agent']=substr($ab, 0, 20);
+    */
 	echo "\n";
 	echo "<tr>\n";
 	echo "<td>" . $row['id'] . "</td>\n";
@@ -91,9 +119,11 @@ while($row = mysqli_fetch_array($result))
 	echo "</tr>\n";
 }
 
-echo "\n</table>\n<center>\n";
 mysqli_close($con);
 ?>
+
+</tbody>
+</table>
 
 </body>
 </html>
