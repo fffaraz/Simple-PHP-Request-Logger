@@ -8,6 +8,7 @@ echo "<center>
 <table border='1'>
 <tr>
 <th>id</th>
+<th>datetime</th>
 <th>ip</th>
 <th>hostname</th>
 <th>uri</th>
@@ -24,6 +25,7 @@ while($row = mysqli_fetch_array($result))
 	echo "\n";
 	echo "<tr>\n";
 	echo "<td>" . $row['id'] . "</td>\n";
+	echo "<td>" . $row['datetime'] . "</td>\n";
 	echo "<td>" . $row['ip'] . "</td>\n";
 	echo "<td>" . @gethostbyaddr($row['ip']) . "</td>\n";
 	echo "<td>" . $row['uri'] . "</td>\n";
