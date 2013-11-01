@@ -49,6 +49,11 @@ $r['data'] = trim( $r['query'] . " " . $r['post'] );
 //$r['forwarded'] = isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : "";
 
 
+// Filter
+if(substr($r['agent'], 0, 11) != "Pingdom.com")
+{
+// Insert to DB
+
 $sql  = "INSERT INTO `hits` (`datetime`, `ip`, `uri`, `agent`, `referer`, `domain`, `filename`, `method`, `data`) VALUES (";
 $sql .= "'{$r['datetime']}', ";
 $sql .= "'{$r['ip']}', ";
@@ -62,4 +67,4 @@ $sql .= "'{$r['data']}' ";
 $sql .= ");";
 
 mysqli_query($con, $sql);
-
+}
