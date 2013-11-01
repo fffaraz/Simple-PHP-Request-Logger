@@ -1,11 +1,17 @@
-<?php
-include ('logdb.php');
+<html>
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
 
-$sql = "SELECT * FROM hits ORDER BY id DESC";
-$result = mysqli_query($con, $sql);
+<!-- Optional theme -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap-theme.min.css">
 
-echo "<center>
-<table border='1'>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<center>
+<table class="table table-striped table-bordered table-condensed" >
 <tr>
 <th>id</th>
 <th>datetime</th>
@@ -18,7 +24,13 @@ echo "<center>
 <th>filename</th>
 <th>method</th>
 <th>data</th>
-</tr>\n";
+</tr>
+
+<?php
+include ('logdb.php');
+
+$sql = "SELECT * FROM hits ORDER BY id DESC";
+$result = mysqli_query($con, $sql);
 
 while($row = mysqli_fetch_array($result))
 {
@@ -38,6 +50,10 @@ while($row = mysqli_fetch_array($result))
 	echo "</tr>\n";
 }
 
-echo "\n</table>\n<center>\n\n";
-
+echo "\n</table>\n<center>\n";
 mysqli_close($con);
+?>
+
+</body>
+</html>
+
