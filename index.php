@@ -89,6 +89,13 @@ function make_whois($inp)
 {
 	return '<a href="http://whois.domaintools.com/' . $inp . '" >' . $inp . '</a>';
 } 
+function make_loc($inp)
+{
+	$res  = '<br>';
+	$res .= '<a href="http://www.iplocation.net/index.php?query=' . $inp . '" >L1</a> ';
+	$res .= '<a href="http://geomaplookup.net/?ip=' . $inp . '" >L2</a> ';
+	return $res;
+} 
 
 while($row = mysqli_fetch_array($result))
 {
@@ -112,7 +119,7 @@ while($row = mysqli_fetch_array($result))
 	echo "<tr>\n";
 	echo "<td>" . $row['id'] . "</td>\n";
 	echo "<td>" . $row['datetime'] . "</td>\n";
-	echo "<td>" . make_whois($row['ip']) . "</td>\n";
+	echo "<td>" . make_whois($row['ip']) . make_loc($row['ip']) . "</td>\n";
 	$hostname = @gethostbyaddr($row['ip']);
 	if($hostname != $row['ip'])
 		echo "<td>" . $hostname . "</td>\n";
