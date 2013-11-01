@@ -79,11 +79,16 @@ function fnShowHide( iCol )
 <?php
 include ('logdb.php');
 
-$limit = 100;
-if(isset($_GET['l'])) $limit = $_GET['l'];
+$limit = 5000;
+//if(isset($_GET['l'])) $limit = $_GET['l'];
 
 $sql = "SELECT * FROM hits ORDER BY id DESC LIMIT " . $limit;
 $result = mysqli_query($con, $sql);
+
+function make_whois($inp)
+{
+	return '<a href="http://whois.domaintools.com/' . $inp . '" >' . $inp . '</a>';
+} 
 
 while($row = mysqli_fetch_array($result))
 {
@@ -107,8 +112,12 @@ while($row = mysqli_fetch_array($result))
 	echo "<tr>\n";
 	echo "<td>" . $row['id'] . "</td>\n";
 	echo "<td>" . $row['datetime'] . "</td>\n";
-	echo "<td>" . $row['ip'] . "</td>\n";
-	echo "<td>" . @gethostbyaddr($row['ip']) . "</td>\n";
+	echo "<td>" . make_whois($row['ip']) . "</td>\n";
+	$hostname = @gethostbyaddr($row['ip']);
+	if($hostname != $row['ip'])
+		echo "<td>" . $hostname . "</td>\n";
+	else
+		echo "<td></td>\n";
 	echo "<td>" . $row['uri'] . "</td>\n";
 	echo "<td>" . $row['agent'] . "</td>\n";
 	echo "<td>" . $row['referer'] . "</td>\n";
