@@ -96,6 +96,14 @@ function make_loc($inp)
 	$res .= '<a href="http://geomaplookup.net/?ip=' . $inp . '" >L2</a> ';
 	return $res;
 } 
+function br1($text)
+{
+	return wordwrap($text, 40, "<br>");
+}
+function br2($text)
+{
+	return wordwrap($text, 40, "<br>", true);
+}
 
 while($row = mysqli_fetch_array($result))
 {
@@ -126,8 +134,8 @@ while($row = mysqli_fetch_array($result))
 	else
 		echo "<td></td>\n";
 	echo "<td>" . $row['uri'] . "</td>\n";
-	echo "<td>" . $row['agent'] . "</td>\n";
-	echo "<td>" . $row['referer'] . "</td>\n";
+	echo "<td>" . br1($row['agent']) . "</td>\n";
+	echo "<td>" . br2($row['referer']) . "</td>\n";
 	echo "<td>" . $row['domain'] . "</td>\n";
 	echo "<td>" . $row['filename'] . "</td>\n";
 	echo "<td>" . $row['method'] . "</td>\n";
