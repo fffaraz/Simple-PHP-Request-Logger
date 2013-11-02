@@ -50,7 +50,8 @@ $r['data'] = trim( $r['query'] . " " . $r['post'] );
 
 
 // Filter
-if(substr($r['agent'], 0, 11) != "Pingdom.com")
+if(substr($r['agent'], 0, 11) != 'Pingdom.com'
+&& strpos($r['agent'],'HostTracker.com') === false)
 {
 // Insert to DB
 
