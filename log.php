@@ -48,6 +48,12 @@ $r['data'] = trim( $r['query'] . " " . $r['post'] );
 // Forwarded for
 //$r['forwarded'] = isset($_SERVER["HTTP_X_FORWARDED_FOR"]) ? $_SERVER["HTTP_X_FORWARDED_FOR"] : "";
 
+// Mysql escape
+$r['uri'] = mysqli_real_escape_string($con, $r['uri']);
+$r['agent'] = mysqli_real_escape_string($con, $r['agent']);
+$r['referer'] = mysqli_real_escape_string($con, $r['referer']);
+$r['domain'] = mysqli_real_escape_string($con, $r['domain']);
+$r['data'] = mysqli_real_escape_string($con, $r['data']);
 
 // Filter
 if(substr($r['agent'], 0, 11) != 'Pingdom.com'
