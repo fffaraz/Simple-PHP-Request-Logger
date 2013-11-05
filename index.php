@@ -1,3 +1,4 @@
+<?php include ('log.php');?>
 <html>
 <head>
 
