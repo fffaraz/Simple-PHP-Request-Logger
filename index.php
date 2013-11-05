@@ -80,8 +80,8 @@ function fnShowHide( iCol )
 <?php
 include_once 'logdb.php';
 
-$limit = 5000;
-//if(isset($_GET['l'])) $limit = $_GET['l'];
+$limit = 100;
+if(isset($_GET['l'])) $limit = mysqli_real_escape_string($con, $_GET['l']);
 
 $sql = "SELECT * FROM hits ORDER BY id DESC LIMIT " . $limit;
 $result = mysqli_query($con, $sql);
