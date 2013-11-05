@@ -1,3 +1,3 @@
 <?php
-include ('logdb.php');
+include_once 'logdb.php';
 

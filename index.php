@@ -1,4 +1,4 @@
-<?php include ('log.php');?>
+<?php include_once 'log.php';?>
 <html>
 <head>
 
@@ -78,7 +78,7 @@ function fnShowHide( iCol )
 <tbody>
 
 <?php
-include ('logdb.php');
+include_once 'logdb.php';
 
 $limit = 5000;
 //if(isset($_GET['l'])) $limit = $_GET['l'];
