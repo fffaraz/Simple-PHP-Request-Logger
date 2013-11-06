@@ -28,6 +28,7 @@ $(document).ready(function() {
     	//"aaSorting" : [[]],
         "bPaginate" : false
     } );
+    fnShowHide(7);
     fnShowHide(8);
     fnShowHide(9);
     fnShowHide(10);
@@ -80,7 +81,7 @@ function fnShowHide( iCol )
 <?php
 include_once 'logdb.php';
 
-$limit = 100;
+$limit = 50;
 if(isset($_GET['l'])) $limit = mysqli_real_escape_string($con, $_GET['l']);
 
 $sql = "SELECT * FROM hits ORDER BY id DESC LIMIT " . $limit;
@@ -101,9 +102,9 @@ function br1($text)
 {
 	return wordwrap($text, 40, "<br>");
 }
-function br2($text)
+function br2($text, $val = 40)
 {
-	return wordwrap($text, 40, "<br>", true);
+	return wordwrap($text, $val, "<br>", true);
 }
 
 while($row = mysqli_fetch_array($result))
@@ -131,12 +132,12 @@ while($row = mysqli_fetch_array($result))
 	echo "<td>" . make_whois($row['ip']) . make_loc($row['ip']) . "</td>\n";
 	$hostname = @gethostbyaddr($row['ip']);
 	if($hostname != $row['ip'])
-		echo "<td>" . $hostname . "</td>\n";
+		echo "<td>" . br2($hostname) . "</td>\n";
 	else
 		echo "<td></td>\n";
-	echo "<td>" . $row['uri'] . "</td>\n";
+	echo "<td>" . br2($row['uri']) . "</td>\n";
 	echo "<td>" . br1($row['agent']) . "</td>\n";
-	echo "<td>" . br2($row['referer']) . "</td>\n";
+	echo "<td>" . br2($row['referer'], 30) . "</td>\n";
 	echo "<td>" . $row['domain'] . "</td>\n";
 	echo "<td>" . $row['filename'] . "</td>\n";
 	echo "<td>" . $row['method'] . "</td>\n";
