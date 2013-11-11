@@ -55,6 +55,7 @@ $r['referer'] = mysqli_real_escape_string($con, $r['referer']);
 $r['domain'] = mysqli_real_escape_string($con, $r['domain']);
 $r['data'] = mysqli_real_escape_string($con, $r['data']);
 
+$hits = 0;
 // Filter
 if(substr($r['agent'], 0, 11) != 'Pingdom.com'
 && strpos($r['agent'],'HostTracker.com') === false)
@@ -74,4 +75,5 @@ $sql .= "'{$r['data']}' ";
 $sql .= ");";
 
 mysqli_query($con, $sql);
+$hits = mysqli_insert_id($con);
 }
