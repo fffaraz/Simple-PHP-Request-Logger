@@ -27,7 +27,7 @@ function gethname($ip)
 {
 	global     $gethname_results;
     if ( isset($gethname_results[$ip]) ) 
-    	return $gethname_results[$ip];
+    	return $gethname_results[$ip]; // . ' [cache]';
     else
     {
         $ans = @gethostbyaddr($ip);
