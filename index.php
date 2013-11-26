@@ -80,32 +80,18 @@ function fnShowHide( iCol )
 
 <?php
 include_once 'logdb.php';
+include_once 'functions.php';
 
 $limit = 50;
 if(isset($_GET['l'])) $limit = mysqli_real_escape_string($con, $_GET['l']);
 
+$time = microtime();
+$time = explode(' ', $time);
+$time = $time[1] + $time[0];
+$start = $time;
+
 $sql = "SELECT * FROM hits ORDER BY id DESC LIMIT " . $limit;
 $result = mysqli_query($con, $sql);
-
-function make_whois($inp)
-{
-	return '<a href="http://whois.domaintools.com/' . $inp . '" >' . $inp . '</a>';
-} 
-function make_loc($inp)
-{
-	$res  = '<br>';
-	$res .= '<a href="http://www.iplocation.net/index.php?query=' . $inp . '" >L1</a> ';
-	$res .= '<a href="http://geomaplookup.net/?ip=' . $inp . '" >L2</a> ';
-	return $res;
-} 
-function br1($text)
-{
-	return wordwrap($text, 40, "<br>");
-}
-function br2($text, $val = 40)
-{
-	return wordwrap($text, $val, "<br>", true);
-}
 
 while($row = mysqli_fetch_array($result))
 {
@@ -130,26 +116,32 @@ while($row = mysqli_fetch_array($result))
 	echo "<td>" . $row['id'] . "</td>\n";
 	echo "<td>" . $row['datetime'] . "</td>\n";
 	echo "<td>" . make_whois($row['ip']) . make_loc($row['ip']) . "</td>\n";
-	$hostname = @gethostbyaddr($row['ip']);
-	if($hostname != $row['ip'])
-		echo "<td>" . br2($hostname) . "</td>\n";
-	else
-		echo "<td></td>\n";
-	echo "<td>" . br2($row['uri']) . "</td>\n";
-	echo "<td>" . br1($row['agent']) . "</td>\n";
-	echo "<td>" . br2($row['referer'], 30) . "</td>\n";
-	echo "<td>" . $row['domain'] . "</td>\n";
-	echo "<td>" . $row['filename'] . "</td>\n";
-	echo "<td>" . $row['method'] . "</td>\n";
-	echo "<td>" . $row['data'] . "</td>\n";
+	echo "<td>" . br2(gethname($row['ip'])) 	. "</td>\n";
+	echo "<td>" . br2($row['uri']) 				. "</td>\n";
+	echo "<td>" . br1($row['agent']) 			. "</td>\n";
+	echo "<td>" . br2($row['referer'], 30) 		. "</td>\n";
+	echo "<td>" . $row['domain'] 	. "</td>\n";
+	echo "<td>" . $row['filename'] 	. "</td>\n";
+	echo "<td>" . $row['method'] 	. "</td>\n";
+	echo "<td>" . $row['data'] 		. "</td>\n";
 	echo "</tr>\n";
 }
+
+$time = microtime();
+$time = explode(' ', $time);
+$time = $time[1] + $time[0];
+$finish = $time;
+$total_time = round(($finish - $start), 4);
 
 mysqli_close($con);
 ?>
 
 </tbody>
 </table>
+
+<br><br><br>
+<center><b><?php echo 'Page generated in ' . $total_time . ' seconds.'; ?></b></center>
+<br><br>
 
 </body>
 </html>
