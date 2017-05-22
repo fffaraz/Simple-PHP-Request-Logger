@@ -57,7 +57,7 @@ file_put_contents($hitCounter, $hit);
 $r['hit'] = $hit;
 
 // Debug
-if(isset($_GET['logdebug'])) 
+if(isset($_GET['logdebug']))
 {
 	echo "<pre>";
 	print_r($r);
@@ -76,4 +76,3 @@ $log .= "--------------------\n";
 
 // Log File
 file_put_contents($logFile, $log, FILE_APPEND);
-
